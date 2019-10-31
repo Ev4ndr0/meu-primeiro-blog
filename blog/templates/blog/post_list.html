@@ -6,9 +6,15 @@
                 <div class="date">
                    <p>{{ post.published_date }}</p>
                 </div>
-            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }} </a></h1>
-             <p>{{ post.text| linebreaks }}</p>
-                <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
+                {% if user.is_authenticated %}
+                    <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }} </a></h1>
+                    <p>{{ post.text| linebreaks }}</p>
+                    <a href="{% url 'post_detail' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
+                {% else %}
+                    <h1>{{ post.title }}</h1>
+                    <p>{{ post.text| linebreaks }}</p>
+                    <p>Comments: {{ post.comments.count }}</p>
+                {%endif %}
             </div>
         {% endfor %}
      {% endblock %}
